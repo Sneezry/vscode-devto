@@ -11,8 +11,8 @@
 		"Other"
 	],
 	"activationEvents": [
-		"*",
-		"onView:devto-explorer"
+		"onView:devto-explorer",
+		"onFileSystem:devto"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -27,7 +27,17 @@
 				"icon": {
 					"dark": "resources/dark/create.svg",
 					"light": "resources/light/create.svg"
-				}
+				},
+				"when": "never"
+			},
+			{
+				"command": "devto.refresh",
+				"title": "Refresh post list",
+				"icon": {
+					"dark": "resources/dark/refresh.svg",
+					"light": "resources/light/refresh.svg"
+				},
+				"when": "never"
 			},
 			{
 				"command": "devto.signin",
@@ -35,7 +45,8 @@
 				"icon": {
 					"dark": "resources/dark/signin.svg",
 					"light": "resources/light/signin.svg"
-				}
+				},
+				"when": "never"
 			},
 			{
 				"command": "devto.signout",
@@ -43,7 +54,8 @@
 				"icon": {
 					"dark": "resources/dark/signout.svg",
 					"light": "resources/light/signout.svg"
-				}
+				},
+				"when": "never"
 			}
 		],
 		"viewsContainers": {
@@ -71,10 +83,15 @@
 					"when": "devto:authorized"
 				},
 				{
+					"command": "devto.refresh",
+					"group": "navigation",
+					"when": "devto:authorized"
+				},
+				{
 					"command": "devto.create",
 					"group": "navigation",
 					"when": "devto:authorized"
-        },
+				},
 				{
 					"command": "devto.signin",
 					"group": "navigation",
