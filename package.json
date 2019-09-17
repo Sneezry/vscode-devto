@@ -1,0 +1,105 @@
+{
+	"name": "vscode-devto",
+	"displayName": "DEV.TO",
+	"description": "DEV Community",
+	"publisher": "sneezry",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.38.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"*",
+		"onView:devto-explorer"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "devto.edit",
+				"title": "Edit post"
+			},
+			{
+				"command": "devto.create",
+				"title": "Create a new post",
+				"icon": {
+					"dark": "resources/dark/create.svg",
+					"light": "resources/light/create.svg"
+				}
+			},
+			{
+				"command": "devto.signin",
+				"title": "Sign in",
+				"icon": {
+					"dark": "resources/dark/signin.svg",
+					"light": "resources/light/signin.svg"
+				}
+			},
+			{
+				"command": "devto.signout",
+				"title": "Sign out",
+				"icon": {
+					"dark": "resources/dark/signout.svg",
+					"light": "resources/light/signout.svg"
+				}
+			}
+		],
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "devto-explorer",
+					"title": "DEV Community",
+					"icon": "resources/devto.svg"
+				}
+			]
+		},
+		"views": {
+			"devto-explorer": [
+				{
+					"id": "devto",
+					"name": "Posts"
+				}
+			]
+		},
+		"menus": {
+			"view/title": [
+				{
+					"command": "devto.signout",
+					"group": "navigation",
+					"when": "devto:authorized"
+				},
+				{
+					"command": "devto.create",
+					"group": "navigation",
+					"when": "devto:authorized"
+        },
+				{
+					"command": "devto.signin",
+					"group": "navigation",
+					"when": "!devto:authorized"
+				}
+			]
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "npm run compile && node ./node_modules/vscode/bin/test"
+	},
+	"devDependencies": {
+		"@types/mocha": "^2.2.42",
+		"@types/node": "^10.12.21",
+		"@types/request-promise": "^4.1.44",
+		"tslint": "^5.12.1",
+		"typescript": "^3.3.1",
+		"vscode": "^1.1.28"
+	},
+	"dependencies": {
+		"request": "^2.88.0",
+		"request-promise": "^4.2.4"
+	}
+}

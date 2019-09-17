@@ -1,0 +1,21 @@
+<svg width="674" height="536" 
+  xmlns="http://www.w3.org/2000/svg" 
+  xmlns:xlink="http://www.w3.org/1999/xlink" overflow="hidden">
+  <defs>
+    <clipPath id="clip0">
+      <path d="M400 58 1074 58 1074 594 400 594Z" fill-rule="evenodd" clip-rule="evenodd"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#clip0)" transform="translate(-400 -58)">
+    <path d="M714 77.9999 996.499 77.9999C1027.7 77.9999 1053 103.324 1053 134.562L1053 517.437C1053 548.676 1027.7 574 996.499 574L714 574" stroke="#C5C5C5" stroke-width="40" stroke-miterlimit="8" fill="none" fill-rule="evenodd"/>
+    <path fill="#C5C5C5" d="M704 564C704 558.477 708.477 554 714 554 719.523 554 724 558.477 724 564 724 569.523 719.523 574 714 574 708.477 574 704 569.523 704 564Z" fill-rule="evenodd"/>
+    <path fill="#C5C5C5" d="M704 584C704 578.477 708.477 574 714 574 719.523 574 724 578.477 724 584 724 589.523 719.523 594 714 594 708.477 594 704 589.523 704 584Z" fill-rule="evenodd"/>
+    <rect fill="#C5C5C5" x="704" y="564" width="20" height="20"/>
+    <path fill="#C5C5C5" d="M704 68C704 62.4772 708.477 58 714 58 719.523 58 724 62.4772 724 68 724 73.5228 719.523 78 714 78 708.477 78 704 73.5228 704 68Z" fill-rule="evenodd"/>
+    <path fill="#C5C5C5" d="M704 88C704 82.4771 708.477 78 714 78 719.523 78 724 82.4771 724 88 724 93.5228 719.523 98 714 98 708.477 98 704 93.5228 704 88Z" fill-rule="evenodd"/>
+    <rect fill="#C5C5C5" x="704" y="68" width="20" height="20"/>
+    <path d="M613.836 559.426 847.241 326.022" stroke="#C5C5C5" stroke-width="40" stroke-linecap="round" stroke-miterlimit="8" fill="none" fill-rule="evenodd"/>
+    <path d="M613.958 92.4961 847.362 325.901" stroke="#C5C5C5" stroke-width="40" stroke-linecap="round" stroke-miterlimit="8" fill="none" fill-rule="evenodd"/>
+    <path d="M420 326 847.128 326" stroke="#C5C5C5" stroke-width="40" stroke-linecap="round" stroke-miterlimit="8" fill="none" fill-rule="evenodd"/>
+  </g>
+</svg>
