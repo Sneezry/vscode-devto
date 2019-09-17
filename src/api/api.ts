@@ -1,10 +1,12 @@
 import * as rq from 'request-promise';
+import { reporters } from 'mocha';
 
 export interface Article {
   id?: number;
   title: string;
   body_markdown?: string;
   published?: boolean;
+  url?: string;
 }
 
 export class API {
@@ -67,6 +69,7 @@ export class API {
           title: response.title,
           body_markdown: response.body_markdown,
           published: response.published,
+          url: response.url,
         });
       }
       page++;

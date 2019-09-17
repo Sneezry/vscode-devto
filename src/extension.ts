@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import {ApiKeyManager} from './ApiKeyManager';
-import {API} from './api/api';
+import {API, Article} from './api/api';
 import {Edit} from './content/Edit';
 import {titleParser} from './content/TitleParser';
 import {DevArticleVirtualFSProvider} from './content/DevArticleVirtualFSProvider';
@@ -18,6 +18,19 @@ export async function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.commands.registerCommand('devto.signin', () => {
 			apiKeyManager.updateApiKeyCommand(treeDataProvider.refresh.bind(treeDataProvider));
+		}),
+		vscode.commands.registerCommand('devto.view', (article: Article) => {
+			if (article.url) {
+				vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(article.url + (article.published ? '' : '/edit')));
+			}
+		}),
+		vscode.commands.registerCommand('devto.delete', (article: Article) => {
+			if (article.url) {
+				vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(article.url +'/delete_confirm'));
+			}
+		}),
+		vscode.commands.registerCommand('devto.key', () => {
+			vscode.commands.executeCommand('vscode.open', vscode.Uri.parse('https://dev.to/settings/account'));
 		}),
 		vscode.commands.registerCommand('devto.refresh', async () => {
 			if (!api.hasApiKey) {

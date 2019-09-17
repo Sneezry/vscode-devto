@@ -1,6 +1,6 @@
 {
 	"name": "vscode-devto",
-	"displayName": "DEV.TO",
+	"displayName": "DEV Community",
 	"description": "DEV Community",
 	"publisher": "sneezry",
 	"version": "0.0.1",
@@ -11,7 +11,7 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onView:devto-explorer",
+		"onView:devto",
 		"onFileSystem:devto"
 	],
 	"main": "./out/extension.js",
@@ -22,13 +22,32 @@
 				"title": "Edit post"
 			},
 			{
+				"command": "devto.delete",
+				"title": "Delete post online"
+			},
+			{
+				"command": "devto.key",
+				"title": "Create API key",
+				"icon": {
+					"dark": "resources/dark/key.svg",
+					"light": "resources/light/key.svg"
+				}
+			},
+			{
+				"command": "devto.view",
+				"title": "View online",
+				"icon": {
+					"dark": "resources/dark/view.svg",
+					"light": "resources/light/view.svg"
+				}
+			},
+			{
 				"command": "devto.create",
 				"title": "Create a new post",
 				"icon": {
 					"dark": "resources/dark/create.svg",
 					"light": "resources/light/create.svg"
-				},
-				"when": "never"
+				}
 			},
 			{
 				"command": "devto.refresh",
@@ -36,8 +55,7 @@
 				"icon": {
 					"dark": "resources/dark/refresh.svg",
 					"light": "resources/light/refresh.svg"
-				},
-				"when": "never"
+				}
 			},
 			{
 				"command": "devto.signin",
@@ -45,8 +63,7 @@
 				"icon": {
 					"dark": "resources/dark/signin.svg",
 					"light": "resources/light/signin.svg"
-				},
-				"when": "never"
+				}
 			},
 			{
 				"command": "devto.signout",
@@ -54,8 +71,7 @@
 				"icon": {
 					"dark": "resources/dark/signout.svg",
 					"light": "resources/light/signout.svg"
-				},
-				"when": "never"
+				}
 			}
 		],
 		"viewsContainers": {
@@ -76,6 +92,40 @@
 			]
 		},
 		"menus": {
+			"commandPalette": [
+				{
+					"command": "devto.edit",
+					"when": "never"
+				},
+				{
+					"command": "devto.key",
+					"when": "never"
+				},
+				{
+					"command": "devto.delete",
+					"when": "never"
+				},
+				{
+					"command": "devto.view",
+					"when": "never"
+				},
+				{
+					"command": "devto.create",
+					"when": "never"
+				},
+				{
+					"command": "devto.refresh",
+					"when": "never"
+				},
+				{
+					"command": "devto.signin",
+					"when": "never"
+				},
+				{
+					"command": "devto.signout",
+					"when": "never"
+				}
+			],
 			"view/title": [
 				{
 					"command": "devto.signout",
@@ -96,6 +146,22 @@
 					"command": "devto.signin",
 					"group": "navigation",
 					"when": "!devto:authorized"
+				},
+				{
+					"command": "devto.key",
+					"group": "navigation",
+					"when": "!devto:authorized"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "devto.view",
+					"group": "inline",
+					"when": "devto:authorized"
+				},
+				{
+					"command": "devto.delete",
+					"when": "devto:authorized"
 				}
 			]
 		}

@@ -19,29 +19,37 @@ export class DevTreeDataProvider implements vscode.TreeDataProvider<Article> {
       return [{
         id: 0,
         title: 'Sign in',
+      }, {
+        id: -1,
+        title: 'Create API key',
       }];
     }
   }
 
-  getTreeItem(artical: Article): vscode.TreeItem {
+  getTreeItem(article: Article): vscode.TreeItem {
     let command: vscode.Command;
-    if (artical.id === 0) {
+    if (article.id === 0) {
       command = {
         title: 'Sign in',
         command: 'devto.signin',
+      };
+    } else if (article.id === -1) {
+      command = {
+        title: 'Create API key',
+        command: 'devto.key',
       };
     } else {
       command = {
         title: 'Edit',
         command: 'devto.edit',
-        arguments: [artical],
+        arguments: [article],
       }
     }
 
     return {
-      label: artical.title,
-      id: `dev-${artical.id}`,
-      iconPath: this._context.asAbsolutePath(path.join('resources', `${artical.published ? 'published' : 'unpublished'}.svg`)),
+      label: article.title,
+      id: `dev-${article.id}`,
+      iconPath: (article.id && article.id > 0 ? this._context.asAbsolutePath(path.join('resources', `${article.published ? 'published' : 'unpublished'}.svg`)) : undefined),
       command,
     };
   }
