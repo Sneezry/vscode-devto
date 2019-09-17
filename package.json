@@ -4,11 +4,17 @@
 	"description": "DEV Community",
 	"publisher": "sneezry",
 	"version": "0.0.1",
+	"icon": "resources/DEV.png",
 	"engines": {
 		"vscode": "^1.38.0"
 	},
 	"categories": [
 		"Other"
+	],
+	"keywords": [
+		"dev",
+		"dev.to",
+		"dev community"
 	],
 	"activationEvents": [
 		"onView:devto",
