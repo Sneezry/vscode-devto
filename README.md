@@ -1,1 +1,1 @@
-# vscode-devto
+# VS Code DEV Community Extension
