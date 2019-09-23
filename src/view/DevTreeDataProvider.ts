@@ -46,15 +46,20 @@ export class DevTreeDataProvider implements vscode.TreeDataProvider<Article> {
       }
     }
 
+    const commentCount = article.comments_count || 0;
+    const positiveReactionsCount = article.positive_reactions_count || 0;
+    const commentMeta = commentCount + (commentCount !== 1 ? ' comments' : ' comment');
+    const positiveReactionsMeta = positiveReactionsCount + (positiveReactionsCount !== 1 ? ' reactions' : ' reaction');
+
     const treeItem: vscode.TreeItem = {
       label: article.title,
-      tooltip: article.title,
+      tooltip: article.title + ' ・ ' + commentMeta + ' ・ ' + positiveReactionsMeta,
       id: `dev-${article.id}`,
       command,
     };
 
     if (article.id && article.id > 0 && !article.published) {
-      treeItem.tooltip += '・Unpublished'
+      treeItem.tooltip += ' ・ Unpublished';
       treeItem.iconPath = this._context.asAbsolutePath(path.join('resources', 'draft.svg'));
     }
 

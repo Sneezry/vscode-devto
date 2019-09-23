@@ -7,6 +7,8 @@ export interface Article {
   body_markdown?: string;
   published?: boolean;
   url?: string;
+  comments_count?: number;
+  positive_reactions_count?: number;
 }
 
 export class API {
@@ -64,13 +66,7 @@ export class API {
     do {
       responseList = await this._list(page);
       for (const response of responseList) {
-        articleList.push({
-          id: response.id,
-          title: response.title,
-          body_markdown: response.body_markdown,
-          published: response.published,
-          url: response.url,
-        });
+        articleList.push(response);
       }
       page++;
     } while(responseList.length > 0);
