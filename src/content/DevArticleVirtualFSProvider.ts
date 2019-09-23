@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
-import {API} from '../api/api';
-import {titleParser} from './TitleParser';
+import {API} from '../api/Api';
+import {titleParser, publishStateParser} from './MetaParser';
 
 const emptyArray = new Uint8Array(0);
 
@@ -69,15 +69,41 @@ cover_image: https://mywebsite.com/article_published_cover_image.png
   async writeFile(uri: vscode.Uri, content: Uint8Array, options: { create: boolean, overwrite: boolean }) {
     const markdown = content.toString();
     const title = titleParser(markdown);
+    const published = publishStateParser(markdown);
     if (title) {
-      const id = Number(uri.query);
-      if (id < 0) {
-        await this.api.create(title, markdown);
-      } else {
-        await this.api.update(id, title, markdown);
-      }
-      
-      await this.api.list(true);
+      await vscode.window.withProgress({
+        title: 'Saving ' + title,
+        location: vscode.ProgressLocation.Notification,
+      }, async () => {
+        const id = Number(uri.query);
+        let realId: number|undefined;
+        try {
+          if (id < 0) {
+            const article = await this.api.create(title, markdown);
+            realId = article.id as number;
+            if (published) {
+              await this.api.updateList(id, undefined, realId);
+            } else {
+              await this.api.list(true);
+            }
+            const uri = vscode.Uri.parse('devto://article/' + encodeURIComponent(title) + '.md?' + realId);
+            const doc = await vscode.workspace.openTextDocument(uri);
+            await vscode.commands.executeCommand('workbench.action.closeActiveEditor');
+            await vscode.window.showTextDocument(doc, { preview: false });
+          } else {
+            await this.api.update(id, title, markdown);
+            if (published) {
+              await this.api.updateList(id, undefined, realId);
+            } else {
+              await this.api.list(true);
+            }
+          }
+        } catch(error) {
+          vscode.window.showWarningMessage('Failed to save \'' + title + '\'.md: ' + error.message);
+        }
+      });
+    } else {
+      vscode.window.showWarningMessage('Failed to save \'' + title + '\'.md: Title is required.');
     }
   }
 

@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import {API} from './api/api';
+import {API} from './api/Api';
 
 export class ApiKeyManager {
   constructor(private _context: vscode.ExtensionContext, private _api: API) {}

@@ -3,7 +3,7 @@
 	"displayName": "DEV Community",
 	"description": "DEV Community",
 	"publisher": "sneezry",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"icon": "resources/DEV.png",
 	"engines": {
 		"vscode": "^1.38.0"
@@ -136,38 +136,38 @@
 				{
 					"command": "devto.signout",
 					"group": "navigation",
-					"when": "devto:authorized"
+					"when": "devto:authorized && view == devto"
 				},
 				{
 					"command": "devto.refresh",
 					"group": "navigation",
-					"when": "devto:authorized"
+					"when": "devto:authorized && view == devto"
 				},
 				{
 					"command": "devto.create",
 					"group": "navigation",
-					"when": "devto:authorized"
+					"when": "devto:authorized && view == devto"
 				},
 				{
 					"command": "devto.signin",
 					"group": "navigation",
-					"when": "!devto:authorized"
+					"when": "!devto:authorized && view == devto"
 				},
 				{
 					"command": "devto.key",
 					"group": "navigation",
-					"when": "!devto:authorized"
+					"when": "!devto:authorized && view == devto"
 				}
 			],
 			"view/item/context": [
 				{
 					"command": "devto.view",
 					"group": "inline",
-					"when": "devto:authorized"
+					"when": "devto:authorized && view == devto"
 				},
 				{
 					"command": "devto.delete",
-					"when": "devto:authorized"
+					"when": "devto:authorized && view == devto"
 				}
 			]
 		}

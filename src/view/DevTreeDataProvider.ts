@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import {Article, API} from '../api/api';
+import {Article, API} from '../api/Api';
 
 export class DevTreeDataProvider implements vscode.TreeDataProvider<Article> {
   constructor(private _context: vscode.ExtensionContext, private _api: API) {}
@@ -46,11 +46,18 @@ export class DevTreeDataProvider implements vscode.TreeDataProvider<Article> {
       }
     }
 
-    return {
+    const treeItem: vscode.TreeItem = {
       label: article.title,
+      tooltip: article.title,
       id: `dev-${article.id}`,
-      iconPath: (article.id && article.id > 0 ? this._context.asAbsolutePath(path.join('resources', `${article.published ? 'published' : 'unpublished'}.svg`)) : undefined),
       command,
     };
+
+    if (article.id && article.id > 0 && !article.published) {
+      treeItem.tooltip += '・Unpublished'
+      treeItem.iconPath = this._context.asAbsolutePath(path.join('resources', 'draft.svg'));
+    }
+
+    return treeItem;
   }
 }

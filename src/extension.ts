@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
 import {ApiKeyManager} from './ApiKeyManager';
-import {API, Article} from './api/api';
+import {API, Article} from './api/Api';
 import {Edit} from './content/Edit';
-import {titleParser} from './content/TitleParser';
+import {titleParser} from './content/MetaParser';
 import {DevArticleVirtualFSProvider} from './content/DevArticleVirtualFSProvider';
 import {DevTreeDataProvider} from './view/DevTreeDataProvider';
 
@@ -48,16 +48,27 @@ export async function activate(context: vscode.ExtensionContext) {
 		vscode.window.createTreeView('devto', {
 			treeDataProvider,
 		}),
-		vscode.workspace.onDidSaveTextDocument(async (document) => {
+		vscode.workspace.onWillSaveTextDocument(async (event) => {
+			const document = event.document;
 			if (document.uri.scheme === 'devto') {
+				const id = Number(document.uri.query);
 				const markdown = document.getText();
 				const title = titleParser(markdown);
-				if (title) {
-					const uri = vscode.Uri.parse('devto://article/' + encodeURIComponent(title) + '.md?' + document.uri.query);
-					const doc = await vscode.workspace.openTextDocument(uri);
-					await vscode.commands.executeCommand('workbench.action.closeActiveEditor');
-					await vscode.window.showTextDocument(doc, { preview: false });
+
+				if (id > 0) {
+					if (title) {
+						await api.updateList(id, markdown);
+						treeDataProvider.refresh();
+						const uri = vscode.Uri.parse('devto://article/' + encodeURIComponent(title) + '.md?' + id);
+						const doc = await vscode.workspace.openTextDocument(uri);
+						await vscode.commands.executeCommand('workbench.action.closeActiveEditor');
+						await vscode.window.showTextDocument(doc, { preview: false });
+					}
 				}
+			}
+		}),
+		vscode.workspace.onDidSaveTextDocument(async (document) => {
+			if (document.uri.scheme === 'devto') {
 				treeDataProvider.refresh();
 			}
 		})
