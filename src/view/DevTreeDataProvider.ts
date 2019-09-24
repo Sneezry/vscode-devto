@@ -60,6 +60,7 @@ export class DevTreeDataProvider implements vscode.TreeDataProvider<Article> {
 
     if (article.id && article.id > 0 && !article.published) {
       treeItem.tooltip += ' ・ Unpublished';
+      treeItem.contextValue = 'unpublished';
       treeItem.iconPath = this._context.asAbsolutePath(path.join('resources', 'draft.svg'));
     }
 

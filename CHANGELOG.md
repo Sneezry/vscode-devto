@@ -4,6 +4,15 @@ All notable changes to the "vscode-devto" extension will be documented in this f
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## 0.0.5
+
+- Add publish shortcut
+- Move view online to context menu
+
+## 0.0.4
+
+- Update guides
+
 ## 0.0.3
 
 - Update icons

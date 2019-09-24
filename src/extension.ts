@@ -14,6 +14,7 @@ export async function activate(context: vscode.ExtensionContext) {
 		api.updateApiKey(apiKey);
 	}
 	const treeDataProvider = new DevTreeDataProvider(context, api);
+	const devArticleVirtualFSProvider = new DevArticleVirtualFSProvider(api);
 		
 	context.subscriptions.push(
 		vscode.commands.registerCommand('devto.signin', () => {
@@ -21,7 +22,40 @@ export async function activate(context: vscode.ExtensionContext) {
 		}),
 		vscode.commands.registerCommand('devto.view', (article: Article) => {
 			if (article.url) {
-				vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(article.url + (article.published ? '' : '/edit')));
+				vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(article.url));
+			}
+		}),
+		vscode.commands.registerCommand('devto.editOnline', (article: Article) => {
+			if (article.url) {
+				vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(article.url + '/edit'));
+			}
+		}),
+		vscode.commands.registerCommand('devto.publish', async (article: Article) => {
+			const markdown = Edit.getPublishedMarkdown(article);
+			if (markdown) {
+				const title = titleParser(markdown);
+				const id = article.id;
+				if (!title || !id) {
+					return;
+				}
+
+				const uri = vscode.Uri.parse('devto://article/' + encodeURIComponent(title) + '.md?' + id);
+				const doc = await vscode.workspace.openTextDocument(uri);
+				const docText = doc.getText();
+				const startPosition = new vscode.Position(0, 0);
+				const endPosition = doc.positionAt(docText.length);
+				const edit = new vscode.WorkspaceEdit();
+				const range = new vscode.Range(startPosition, endPosition);
+				edit.replace(uri, range, markdown);
+				await vscode.window.withProgress({
+					title: `Publishing ${title}`,
+					location: vscode.ProgressLocation.Notification,
+				}, async () => {
+					await api.updateList(id, markdown);
+					treeDataProvider.refresh();
+					await vscode.workspace.applyEdit(edit);
+					await doc.save();
+				});
 			}
 		}),
 		vscode.commands.registerCommand('devto.delete', (article: Article) => {
@@ -43,7 +77,7 @@ export async function activate(context: vscode.ExtensionContext) {
 			apiKeyManager.removeApiKeyCommand(treeDataProvider.refresh.bind(treeDataProvider));
 		}),
 		vscode.commands.registerCommand('devto.create', Edit.createNewArticle),
-		vscode.workspace.registerFileSystemProvider('devto', new DevArticleVirtualFSProvider(api), { isCaseSensitive: true, isReadonly: false }),
+		vscode.workspace.registerFileSystemProvider('devto', devArticleVirtualFSProvider, { isCaseSensitive: true, isReadonly: false }),
 		vscode.commands.registerCommand('devto.edit', Edit.showMarkdown),
 		vscode.window.createTreeView('devto', {
 			treeDataProvider,

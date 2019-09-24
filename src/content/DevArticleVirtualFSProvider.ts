@@ -91,12 +91,8 @@ cover_image: https://mywebsite.com/article_published_cover_image.png
             await vscode.commands.executeCommand('workbench.action.closeActiveEditor');
             await vscode.window.showTextDocument(doc, { preview: false });
           } else {
+            await this.api.updateList(id, markdown);
             await this.api.update(id, title, markdown);
-            if (published) {
-              await this.api.updateList(id, undefined, realId);
-            } else {
-              await this.api.list(true);
-            }
           }
         } catch(error) {
           vscode.window.showWarningMessage('Failed to save \'' + title + '\'.md: ' + error.message);

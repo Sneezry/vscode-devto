@@ -3,7 +3,7 @@
 	"displayName": "DEV Community",
 	"description": "DEV Community",
 	"publisher": "sneezry",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"icon": "resources/DEV.png",
 	"preview": true,
 	"galleryBanner": {
@@ -46,11 +46,15 @@
 			},
 			{
 				"command": "devto.view",
-				"title": "View online",
-				"icon": {
-					"dark": "resources/dark/view.svg",
-					"light": "resources/light/view.svg"
-				}
+				"title": "View online"
+			},
+			{
+				"command": "devto.editOnline",
+				"title": "Edit online"
+			},
+			{
+				"command": "devto.publish",
+				"title": "Publish post"
 			},
 			{
 				"command": "devto.create",
@@ -121,6 +125,14 @@
 					"when": "never"
 				},
 				{
+					"command": "devto.editOnline",
+					"when": "never"
+				},
+				{
+					"command": "devto.publish",
+					"when": "never"
+				},
+				{
 					"command": "devto.create",
 					"when": "never"
 				},
@@ -167,12 +179,23 @@
 			"view/item/context": [
 				{
 					"command": "devto.view",
-					"group": "inline",
-					"when": "devto:authorized && view == devto"
+					"when": "devto:authorized && view == devto && viewItem != unpublished",
+					"group": "devto@1"
+				},
+				{
+					"command": "devto.publish",
+					"when": "devto:authorized && view == devto && viewItem == unpublished",
+					"group": "devto@2"
+				},
+				{
+					"command": "devto.editOnline",
+					"when": "devto:authorized && view == devto && viewItem == unpublished",
+					"group": "devto@3"
 				},
 				{
 					"command": "devto.delete",
-					"when": "devto:authorized && view == devto"
+					"when": "devto:authorized && view == devto",
+					"group": "devto@4"
 				}
 			]
 		}
