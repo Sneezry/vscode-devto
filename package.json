@@ -1,222 +1,222 @@
 {
-	"name": "vscode-devto",
-	"displayName": "DEV Community",
-	"description": "DEV Community",
-	"publisher": "sneezry",
-	"version": "0.0.5",
-	"icon": "resources/DEV.png",
-	"preview": true,
-	"galleryBanner": {
-		"color": "#2D2D2D",
-		"theme": "dark"
-	},
-	"engines": {
-		"vscode": "^1.38.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"keywords": [
-		"dev",
-		"dev.to",
-		"dev community"
-	],
-	"activationEvents": [
-		"onView:devto",
-		"onFileSystem:devto"
-	],
-	"main": "./out/extension.js",
-	"contributes": {
-		"commands": [
-			{
-				"command": "devto.edit",
-				"title": "Edit post"
-			},
-			{
-				"command": "devto.delete",
-				"title": "Delete post online"
-			},
-			{
-				"command": "devto.key",
-				"title": "Create API key",
-				"icon": {
-					"dark": "resources/dark/key.svg",
-					"light": "resources/light/key.svg"
-				}
-			},
-			{
-				"command": "devto.view",
-				"title": "View online"
-			},
-			{
-				"command": "devto.editOnline",
-				"title": "Edit online"
-			},
-			{
-				"command": "devto.publish",
-				"title": "Publish post"
-			},
-			{
-				"command": "devto.create",
-				"title": "Create a new post",
-				"icon": {
-					"dark": "resources/dark/create.svg",
-					"light": "resources/light/create.svg"
-				}
-			},
-			{
-				"command": "devto.refresh",
-				"title": "Refresh post list",
-				"icon": {
-					"dark": "resources/dark/refresh.svg",
-					"light": "resources/light/refresh.svg"
-				}
-			},
-			{
-				"command": "devto.signin",
-				"title": "Sign in",
-				"icon": {
-					"dark": "resources/dark/signin.svg",
-					"light": "resources/light/signin.svg"
-				}
-			},
-			{
-				"command": "devto.signout",
-				"title": "Sign out",
-				"icon": {
-					"dark": "resources/dark/signout.svg",
-					"light": "resources/light/signout.svg"
-				}
-			}
-		],
-		"viewsContainers": {
-			"activitybar": [
-				{
-					"id": "devto-explorer",
-					"title": "DEV Community",
-					"icon": "resources/devto.svg"
-				}
-			]
-		},
-		"views": {
-			"devto-explorer": [
-				{
-					"id": "devto",
-					"name": "Posts"
-				}
-			]
-		},
-		"menus": {
-			"commandPalette": [
-				{
-					"command": "devto.edit",
-					"when": "never"
-				},
-				{
-					"command": "devto.key",
-					"when": "never"
-				},
-				{
-					"command": "devto.delete",
-					"when": "never"
-				},
-				{
-					"command": "devto.view",
-					"when": "never"
-				},
-				{
-					"command": "devto.editOnline",
-					"when": "never"
-				},
-				{
-					"command": "devto.publish",
-					"when": "never"
-				},
-				{
-					"command": "devto.create",
-					"when": "never"
-				},
-				{
-					"command": "devto.refresh",
-					"when": "never"
-				},
-				{
-					"command": "devto.signin",
-					"when": "never"
-				},
-				{
-					"command": "devto.signout",
-					"when": "never"
-				}
-			],
-			"view/title": [
-				{
-					"command": "devto.signout",
-					"group": "navigation",
-					"when": "devto:authorized && view == devto"
-				},
-				{
-					"command": "devto.refresh",
-					"group": "navigation",
-					"when": "devto:authorized && view == devto"
-				},
-				{
-					"command": "devto.create",
-					"group": "navigation",
-					"when": "devto:authorized && view == devto"
-				},
-				{
-					"command": "devto.signin",
-					"group": "navigation",
-					"when": "!devto:authorized && view == devto"
-				},
-				{
-					"command": "devto.key",
-					"group": "navigation",
-					"when": "!devto:authorized && view == devto"
-				}
-			],
-			"view/item/context": [
-				{
-					"command": "devto.view",
-					"when": "devto:authorized && view == devto && viewItem != unpublished",
-					"group": "devto@1"
-				},
-				{
-					"command": "devto.publish",
-					"when": "devto:authorized && view == devto && viewItem == unpublished",
-					"group": "devto@2"
-				},
-				{
-					"command": "devto.editOnline",
-					"when": "devto:authorized && view == devto && viewItem == unpublished",
-					"group": "devto@3"
-				},
-				{
-					"command": "devto.delete",
-					"when": "devto:authorized && view == devto",
-					"group": "devto@4"
-				}
-			]
-		}
-	},
-	"scripts": {
-		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
-		"watch": "tsc -watch -p ./",
-		"postinstall": "node ./node_modules/vscode/bin/install",
-		"test": "npm run compile && node ./node_modules/vscode/bin/test"
-	},
-	"devDependencies": {
-		"@types/mocha": "^2.2.42",
-		"@types/node": "^10.12.21",
-		"@types/request-promise": "^4.1.44",
-		"tslint": "^5.12.1",
-		"typescript": "^3.3.1",
-		"vscode": "^1.1.28"
-	},
-	"dependencies": {
-		"request": "^2.88.0",
-		"request-promise": "^4.2.4"
-	}
+  "name": "vscode-devto",
+  "displayName": "DEV Community",
+  "description": "DEV Community",
+  "publisher": "sneezry",
+  "version": "0.0.6",
+  "icon": "resources/DEV.png",
+  "preview": true,
+  "galleryBanner": {
+    "color": "#2D2D2D",
+    "theme": "dark"
+  },
+  "engines": {
+    "vscode": "^1.38.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "dev",
+    "dev.to",
+    "dev community"
+  ],
+  "activationEvents": [
+    "onView:devto",
+    "onFileSystem:devto"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "devto.edit",
+        "title": "Edit post"
+      },
+      {
+        "command": "devto.delete",
+        "title": "Delete post"
+      },
+      {
+        "command": "devto.key",
+        "title": "Create API key",
+        "icon": {
+          "dark": "resources/dark/key.svg",
+          "light": "resources/light/key.svg"
+        }
+      },
+      {
+        "command": "devto.view",
+        "title": "View online"
+      },
+      {
+        "command": "devto.editOnline",
+        "title": "Edit online"
+      },
+      {
+        "command": "devto.publish",
+        "title": "Publish post"
+      },
+      {
+        "command": "devto.create",
+        "title": "Create a new post",
+        "icon": {
+          "dark": "resources/dark/create.svg",
+          "light": "resources/light/create.svg"
+        }
+      },
+      {
+        "command": "devto.refresh",
+        "title": "Refresh post list",
+        "icon": {
+          "dark": "resources/dark/refresh.svg",
+          "light": "resources/light/refresh.svg"
+        }
+      },
+      {
+        "command": "devto.signin",
+        "title": "Sign in",
+        "icon": {
+          "dark": "resources/dark/signin.svg",
+          "light": "resources/light/signin.svg"
+        }
+      },
+      {
+        "command": "devto.signout",
+        "title": "Sign out",
+        "icon": {
+          "dark": "resources/dark/signout.svg",
+          "light": "resources/light/signout.svg"
+        }
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "devto-explorer",
+          "title": "DEV Community",
+          "icon": "resources/devto.svg"
+        }
+      ]
+    },
+    "views": {
+      "devto-explorer": [
+        {
+          "id": "devto",
+          "name": "Posts"
+        }
+      ]
+    },
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "devto.edit",
+          "when": "never"
+        },
+        {
+          "command": "devto.key",
+          "when": "never"
+        },
+        {
+          "command": "devto.delete",
+          "when": "never"
+        },
+        {
+          "command": "devto.view",
+          "when": "never"
+        },
+        {
+          "command": "devto.editOnline",
+          "when": "never"
+        },
+        {
+          "command": "devto.publish",
+          "when": "never"
+        },
+        {
+          "command": "devto.create",
+          "when": "never"
+        },
+        {
+          "command": "devto.refresh",
+          "when": "never"
+        },
+        {
+          "command": "devto.signin",
+          "when": "never"
+        },
+        {
+          "command": "devto.signout",
+          "when": "never"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "devto.signout",
+          "group": "navigation",
+          "when": "devto:authorized && view == devto"
+        },
+        {
+          "command": "devto.refresh",
+          "group": "navigation",
+          "when": "devto:authorized && view == devto"
+        },
+        {
+          "command": "devto.create",
+          "group": "navigation",
+          "when": "devto:authorized && view == devto"
+        },
+        {
+          "command": "devto.signin",
+          "group": "navigation",
+          "when": "!devto:authorized && view == devto"
+        },
+        {
+          "command": "devto.key",
+          "group": "navigation",
+          "when": "!devto:authorized && view == devto"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "devto.view",
+          "when": "devto:authorized && view == devto && viewItem != unpublished",
+          "group": "devto@1"
+        },
+        {
+          "command": "devto.publish",
+          "when": "devto:authorized && view == devto && viewItem == unpublished",
+          "group": "devto@2"
+        },
+        {
+          "command": "devto.editOnline",
+          "when": "devto:authorized && view == devto && viewItem == unpublished",
+          "group": "devto@3"
+        },
+        {
+          "command": "devto.delete",
+          "when": "devto:authorized && view == devto",
+          "group": "devto@4"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^2.2.42",
+    "@types/node": "^10.12.21",
+    "@types/request-promise": "^4.1.44",
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.1",
+    "vscode": "^1.1.28"
+  },
+  "dependencies": {
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
+  }
 }

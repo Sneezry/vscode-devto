@@ -1,8 +1,9 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import {Article, API} from '../api/Api';
+import {resourceUriBuilder} from '../content/ResourceUriBuilder';
 
-export class DevTreeDataProvider implements vscode.TreeDataProvider<Article> {
+export class DevTreeDataProvider implements vscode.TreeDataProvider<string> {
   constructor(private _context: vscode.ExtensionContext, private _api: API) {}
 
   private onDidChangeTreeDataEvent: vscode.EventEmitter<null> = new vscode.EventEmitter<null>();
@@ -12,28 +13,26 @@ export class DevTreeDataProvider implements vscode.TreeDataProvider<Article> {
     this.onDidChangeTreeDataEvent.fire();
   }
 
-  getChildren() {
+  async getChildren() {
     if (this._api.hasApiKey) {
-      return this._api.list();
+      const uri = resourceUriBuilder();
+      const fileList = await vscode.workspace.fs.readDirectory(uri);
+      return fileList.map((item) => {
+        return item[0];
+      });
     } else {
-      return [{
-        id: 0,
-        title: 'Sign in',
-      }, {
-        id: -1,
-        title: 'Create API key',
-      }];
+      return ['Sign in', 'Create API key'];
     }
   }
 
-  getTreeItem(article: Article): vscode.TreeItem {
+  async getTreeItem(fileName: string): Promise<vscode.TreeItem> {
     let command: vscode.Command;
-    if (article.id === 0) {
+    if (fileName === 'Sign in') {
       command = {
         title: 'Sign in',
         command: 'devto.signin',
       };
-    } else if (article.id === -1) {
+    } else if (fileName === 'Create API key') {
       command = {
         title: 'Create API key',
         command: 'devto.key',
@@ -42,10 +41,16 @@ export class DevTreeDataProvider implements vscode.TreeDataProvider<Article> {
       command = {
         title: 'Edit',
         command: 'devto.edit',
-        arguments: [article],
+        arguments: [fileName],
       }
     }
 
+    const uri = resourceUriBuilder({
+      resourcePath: fileName,
+      raw: true,
+    });
+    const articleRaw = (await vscode.workspace.fs.readFile(uri)).toString();
+    const article: Article = JSON.parse(articleRaw);
     const commentCount = article.comments_count || 0;
     const positiveReactionsCount = article.positive_reactions_count || 0;
     const commentMeta = commentCount + (commentCount !== 1 ? ' comments' : ' comment');

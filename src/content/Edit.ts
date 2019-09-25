@@ -1,16 +1,20 @@
 import * as vscode from 'vscode';
 import {Article} from '../api/Api';
-import {publishStateParser} from './MetaParser';
+import {publishStateParser, titleParser} from './MetaParser';
+import {resourceUriBuilder} from './ResourceUriBuilder';
 
 export class Edit {
-  static async showMarkdown(article: Article) {
-    const uri = vscode.Uri.parse('devto://article/' + encodeURIComponent(article.title) + '.md?' + article.id);
+  static async showMarkdown(fileName: string) {
+    const uri = resourceUriBuilder({resourcePath: fileName});
     const doc = await vscode.workspace.openTextDocument(uri);
     await vscode.window.showTextDocument(doc, { preview: true });
   }
 
   static async createNewArticle() {
-    const uri = vscode.Uri.parse('devto://article/Untitled.md?-' + Date.now());
+    const uri = resourceUriBuilder({
+      title: 'Untitled',
+      id: -Date.now(),
+    });
     const doc = await vscode.workspace.openTextDocument(uri);
     await vscode.window.showTextDocument(doc, { preview: true });
   }
@@ -36,5 +40,27 @@ export class Edit {
     }
 
     return markdown;
+  }
+
+  static async publish(article: Article) {
+    const markdown = Edit.getPublishedMarkdown(article);
+    if (markdown) {
+      const title = titleParser(markdown);
+      const id = article.id;
+      if (!title || !id) {
+        return;
+      }
+
+      const uri = resourceUriBuilder({title, id});
+      const doc = await vscode.workspace.openTextDocument(uri);
+      const docText = doc.getText();
+      const startPosition = new vscode.Position(0, 0);
+      const endPosition = doc.positionAt(docText.length);
+      const edit = new vscode.WorkspaceEdit();
+      const range = new vscode.Range(startPosition, endPosition);
+      edit.replace(uri, range, markdown);
+      await vscode.workspace.applyEdit(edit);
+      await doc.save();
+    }
   }
 }

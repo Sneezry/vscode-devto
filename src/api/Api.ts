@@ -1,5 +1,4 @@
 import * as rq from 'request-promise';
-import {titleParser, publishStateParser} from '../content/MetaParser';
 
 export interface Article {
   id?: number;
@@ -9,6 +8,7 @@ export interface Article {
   url?: string;
   comments_count?: number;
   positive_reactions_count?: number;
+  reserveTitle?: string;
 }
 
 export class API {
@@ -44,9 +44,7 @@ export class API {
     const response: Article[] = await rq(options);
     return response;
   }
-
-  private _articleList: Article[]|null = null;
-
+  
   get hasApiKey() {
     return !!this._apiKey;
   }
@@ -55,11 +53,7 @@ export class API {
     this._apiKey = apiKey;
   }
 
-  async list(skipCache = false) {
-    if (!skipCache && this._articleList) {
-      return this._articleList;
-    }
-
+  async list() {
     const articleList: Article[] = [];
     let page = 1;
     let responseList: Article[];
@@ -71,7 +65,6 @@ export class API {
       page++;
     } while(responseList.length > 0);
 
-    this._articleList = articleList;
     return articleList;
   }
 
@@ -91,52 +84,5 @@ export class API {
     const options = this._buildRequestOptions('/articles', 'POST', undefined, {title, body_markdown: bodyMarkdown});
     const response: Article = await rq(options);
     return response;
-  }
-
-  async updateList(id: number, markdown?: string, realId?: number) {
-    if (isNaN(id) || id < 0 || !this._articleList) {
-      return this.list(true);
-    }
-
-    const updatedIndex = this._articleList.findIndex((item) => {
-      return item.id === id;
-    });
-
-    if (markdown) {
-      const title = titleParser(markdown) as string;
-      const published = publishStateParser(markdown);
-      if (updatedIndex !== -1) {
-        this._articleList[updatedIndex].body_markdown = markdown;
-        this._articleList[updatedIndex].title = title as string;
-        this._articleList[updatedIndex].published = published;
-      } else {
-        this._articleList.push({
-          id,
-          title,
-          body_markdown: markdown,
-          published,
-        });
-      }
-    } else {
-      let sliceIndex = -1;
-      if (realId) {
-        sliceIndex = this._articleList.findIndex((item) => {
-          return item.id === id;
-        });
-        id = realId;
-      }
-      const updatedArticle = await this.get(id);
-      if (updatedIndex !== -1) {
-        this._articleList[updatedIndex] = updatedArticle;
-      } else {
-        this._articleList.push(updatedArticle);
-      }
-
-      if (sliceIndex !== -1) {
-        this._articleList.splice(sliceIndex, 1);
-      }
-    }
-
-    return this._articleList;
   }
 }
