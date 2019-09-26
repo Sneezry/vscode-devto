@@ -3,12 +3,12 @@ export function titleParser(markdown: string) {
   if (!yaml) {
     return null;
   }
-  const title = yaml[1].match(/^\s*title:\s*(.*?)\s*$/m);
+  const title = yaml[1].match(/^[ \t]*title:[ \t]*(.*?)[ \t]*$/m);
   if (!title) {
     return null;
   }
 
-  return title[1];
+  return decodeURIComponent(title[1]);
 }
 
 export function publishStateParser(markdown: string) {
@@ -16,7 +16,7 @@ export function publishStateParser(markdown: string) {
   if (!yaml) {
     return false;
   }
-  const published = yaml[1].match(/^\s*published:\s*(.*?)\s*$/m);
+  const published = yaml[1].match(/^[ \t]*published:[ \t]*(.*?)[ \t]*$/m);
   if (!published) {
     return false;
   }

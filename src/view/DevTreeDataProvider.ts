@@ -1,10 +1,9 @@
 import * as vscode from 'vscode';
-import * as path from 'path';
 import {Article, API} from '../api/Api';
 import {resourceUriBuilder} from '../content/ResourceUriBuilder';
 
 export class DevTreeDataProvider implements vscode.TreeDataProvider<string> {
-  constructor(private _context: vscode.ExtensionContext, private _api: API) {}
+  constructor(private _api: API) {}
 
   private onDidChangeTreeDataEvent: vscode.EventEmitter<null> = new vscode.EventEmitter<null>();
   public readonly onDidChangeTreeData: vscode.Event<null> = this.onDidChangeTreeDataEvent.event;
@@ -60,13 +59,17 @@ export class DevTreeDataProvider implements vscode.TreeDataProvider<string> {
       label: article.title,
       tooltip: article.title + ' ・ ' + commentMeta + ' ・ ' + positiveReactionsMeta,
       id: `dev-${article.id}`,
+      iconPath: vscode.ThemeIcon.File,
+      resourceUri: resourceUriBuilder({resourcePath: fileName}),
       command,
     };
 
     if (article.id && article.id > 0 && !article.published) {
-      treeItem.tooltip += ' ・ Unpublished';
+      treeItem.label = '[Draft] ' + treeItem.label;
+      // hack for draft icon
+      treeItem.resourceUri = resourceUriBuilder({resourcePath: 'readme.md'}),
+      treeItem.tooltip += ' ・ Draft';
       treeItem.contextValue = 'unpublished';
-      treeItem.iconPath = this._context.asAbsolutePath(path.join('resources', 'draft.svg'));
     }
 
     return treeItem;

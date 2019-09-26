@@ -42,7 +42,7 @@ export class DevArticleVirtualFSProvider implements vscode.FileSystemProvider {
       }
 
       return this._articleList.map((article) => {
-        return [article.title + '-0' + article.id + '.md', vscode.FileType.File];
+        return [encodeURIComponent(article.title) + '-0' + article.id + '.md', vscode.FileType.File];
       });
     }
     return [];
@@ -60,13 +60,10 @@ export class DevArticleVirtualFSProvider implements vscode.FileSystemProvider {
     const id = idMatched ? Number(idMatched[1]) : 0;
     if (id < 0) {
       const buffer = Buffer.from(`---
-title: Hello, World!
+title: 
 published: false
-tags: discuss, help
-date: 20190701T10:00Z
-series: Hello series
-canonical_url: https://example.com/blog/hello
-cover_image: https://mywebsite.com/article_published_cover_image.png
+description: 
+tags: 
 ---
 
 `, 'utf8');
@@ -106,7 +103,7 @@ cover_image: https://mywebsite.com/article_published_cover_image.png
     const idMatched = uri.path.match(/0([\-]?[1-9]\d*)\.md$/);
     const id = idMatched ? Number(idMatched[1]) : 0;
     const titleMatched = uri.path.match(/^[\\\/]?(.*?)\-0[\-]?[1-9]\d*\.md/);
-    const oldTitle = titleMatched ? titleMatched[1] : '';
+    const oldTitle = decodeURIComponent(titleMatched ? titleMatched[1] : '');
 
     if (title) {
       if (id < 0) {
@@ -154,7 +151,7 @@ cover_image: https://mywebsite.com/article_published_cover_image.png
         }
       });
     } else {
-      vscode.window.showWarningMessage('Failed to save \'' + title + '-0' + id + '\'.md: Title is required.');
+      vscode.window.showWarningMessage('😱 Heads up: title can\'t be blank.');
     }
   }
 
@@ -162,7 +159,7 @@ cover_image: https://mywebsite.com/article_published_cover_image.png
     const idMatched = newUri.path.match(/0([\-]?[1-9]\d*)\.md$/);
     const id = idMatched ? Number(idMatched[1]) : 0;
     const titleMatched = newUri.path.match(/^[\\\/]?(.*?)\-0[\-]?[1-9]\d*\.md/);
-    const title = titleMatched ? titleMatched[1] : '';
+    const title = decodeURIComponent(titleMatched ? titleMatched[1] : '');
 
     const article = this._articleList.find((article) => {
       return article.id === id;
@@ -186,7 +183,7 @@ cover_image: https://mywebsite.com/article_published_cover_image.png
     const idMatched = uri.path.match(/0([\-]?[1-9]\d*)\.md$/);
     const id = idMatched ? Number(idMatched[1]) : 0;
     const titleMatched = uri.path.match(/^[\\\/]?(.*?)\-0[\-]?[1-9]\d*\.md/);
-    const title = titleMatched ? titleMatched[1] : '';
+    const title = decodeURIComponent(titleMatched ? titleMatched[1] : '');
     const article = this._articleList.find((article) => {
       return article.id === id;
     });

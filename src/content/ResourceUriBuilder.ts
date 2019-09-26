@@ -12,7 +12,8 @@ export function resourceUriBuilder(options?: {
   }
   
   if (options && options.resourcePath) {
-    uriString = baseUri + options.resourcePath
+    // see https://github.com/microsoft/vscode/issues/45515#issuecomment-509178608
+    uriString = baseUri + options.resourcePath.replace(/%2f/ig, '%252f')
     if (options.raw) {
       uriString += '?raw';
     }

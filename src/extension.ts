@@ -23,7 +23,7 @@ export async function activate(context: vscode.ExtensionContext) {
   if (apiKey) {
     api.updateApiKey(apiKey);
   }
-  const treeDataProvider = new DevTreeDataProvider(context, api);
+  const treeDataProvider = new DevTreeDataProvider(api);
 	const devArticleVirtualFSProvider = new DevArticleVirtualFSProvider(api);
 	await devArticleVirtualFSProvider.initialize();
     
