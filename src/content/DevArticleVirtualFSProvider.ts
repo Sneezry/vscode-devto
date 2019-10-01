@@ -14,7 +14,9 @@ export class DevArticleVirtualFSProvider implements vscode.FileSystemProvider {
 
   async initialize() {
     this._articleListCached = true;
-    this._articleList = await this.api.list();
+    try {
+      this._articleList = await this.api.list();
+    } catch(ignore) {}
   }
 
   get onDidChangeFile(): vscode.Event<vscode.FileChangeEvent[]> {
@@ -38,7 +40,9 @@ export class DevArticleVirtualFSProvider implements vscode.FileSystemProvider {
     if (/^[\\\/]$/.test(uri.path)) {
       if (!this._articleListCached) {
         this._articleListCached = true;
-        this._articleList = await this.api.list();
+        try {
+          this._articleList = await this.api.list();
+        } catch(ignore) {}
       }
 
       return this._articleList.map((article) => {
