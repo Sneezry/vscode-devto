@@ -3,7 +3,7 @@
   "displayName": "DEV Community",
   "description": "DEV Community",
   "publisher": "sneezry",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "icon": "resources/DEV.png",
   "preview": true,
   "galleryBanner": {
@@ -87,6 +87,20 @@
           "dark": "resources/dark/signout.svg",
           "light": "resources/light/signout.svg"
         }
+      },
+      {
+        "command": "devto.uploadImage",
+        "title": "Upload image"
+      },
+      {
+        "command": "devto.updateGitHubPersionalToken",
+        "title": "Update GitHub persional access token",
+        "category": "DEV Commuity"
+      },
+      {
+        "command": "devto.removeGitHubPersionalToken",
+        "title": "Remove GitHub persional access token",
+        "category": "DEV Commuity"
       }
     ],
     "viewsContainers": {
@@ -146,6 +160,10 @@
         },
         {
           "command": "devto.signout",
+          "when": "never"
+        },
+        {
+          "command": "devto.uploadImage",
           "when": "never"
         }
       ],

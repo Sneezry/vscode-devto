@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import {Article} from '../api/Api';
+import {Article} from '../api/DevApi';
 import {publishStateParser, titleParser} from './MetaParser';
 import {resourceUriBuilder} from './ResourceUriBuilder';
 

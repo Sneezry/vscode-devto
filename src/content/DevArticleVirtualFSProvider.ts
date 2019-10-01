@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import {Article, API} from '../api/Api';
+import {Article, DevAPI} from '../api/DevApi';
 import {titleParser, publishStateParser} from './MetaParser';
 import {resourceUriBuilder} from '../content/ResourceUriBuilder';
 
@@ -10,7 +10,7 @@ export class DevArticleVirtualFSProvider implements vscode.FileSystemProvider {
   private _articleList: Article[] = [];
   private _articleListCached = false;
 
-  constructor(private api: API) {}
+  constructor(private api: DevAPI) {}
 
   async initialize() {
     this._articleListCached = true;

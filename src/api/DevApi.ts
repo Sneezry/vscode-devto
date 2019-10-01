@@ -11,7 +11,7 @@ export interface Article {
   reserveTitle?: string;
 }
 
-export class API {
+export class DevAPI {
   constructor(private _apiKey?: string) {}
 
   private _buildRequestOptions(path: string, method: string, parameters?: {[key: string]: string|number}, artical?: Article) {

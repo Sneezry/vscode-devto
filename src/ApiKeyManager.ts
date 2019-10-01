@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
-import {API} from './api/Api';
+import {DevAPI} from './api/DevApi';
 
-export class ApiKeyManager {
-  constructor(private _context: vscode.ExtensionContext, private _api: API) {}
+export class DevApiKeyManager {
+  constructor(private _context: vscode.ExtensionContext, private _api: DevAPI) {}
 
   async updateApiKey(apiKey: string) {
     await this._context.globalState.update('devto:apiKey', apiKey);

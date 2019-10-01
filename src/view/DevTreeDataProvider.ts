@@ -1,9 +1,9 @@
 import * as vscode from 'vscode';
-import {Article, API} from '../api/Api';
+import {Article, DevAPI} from '../api/DevApi';
 import {resourceUriBuilder} from '../content/ResourceUriBuilder';
 
 export class DevTreeDataProvider implements vscode.TreeDataProvider<string> {
-  constructor(private _api: API) {}
+  constructor(private _api: DevAPI) {}
 
   private onDidChangeTreeDataEvent: vscode.EventEmitter<null> = new vscode.EventEmitter<null>();
   public readonly onDidChangeTreeData: vscode.Event<null> = this.onDidChangeTreeDataEvent.event;
