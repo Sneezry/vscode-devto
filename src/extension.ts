@@ -8,7 +8,7 @@ import {DevTreeDataProvider} from './view/DevTreeDataProvider';
 import {ImageUploadManager} from './ImageUploadManager';
 
 async function getArticleByFileName(fileName: string) {
-	const uri = resourceUriBuilder({
+  const uri = resourceUriBuilder({
     resourcePath: fileName,
     raw: true,
   });
@@ -25,7 +25,7 @@ export async function activate(context: vscode.ExtensionContext) {
     api.updateApiKey(apiKey);
   }
   const treeDataProvider = new DevTreeDataProvider(api);
-	const devArticleVirtualFSProvider = new DevArticleVirtualFSProvider(api);
+  const devArticleVirtualFSProvider = new DevArticleVirtualFSProvider(api);
   await devArticleVirtualFSProvider.initialize();
   
   const uploadImageButton = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
@@ -52,25 +52,25 @@ export async function activate(context: vscode.ExtensionContext) {
       await imageUploadManager.removeGitHubPersonalToken();
     }),
     vscode.commands.registerCommand('devto.view', async (fileName: string) => {
-			const uri = resourceUriBuilder({
-				resourcePath: fileName,
-				raw: true,
-			});
-			const articleRaw = (await vscode.workspace.fs.readFile(uri)).toString();
-			const article: Article = JSON.parse(articleRaw);
+      const uri = resourceUriBuilder({
+        resourcePath: fileName,
+        raw: true,
+      });
+      const articleRaw = (await vscode.workspace.fs.readFile(uri)).toString();
+      const article: Article = JSON.parse(articleRaw);
       if (article.url) {
         await vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(article.url));
       }
     }),
     vscode.commands.registerCommand('devto.editOnline', async (fileName: string) => {
-			const article = await getArticleByFileName(fileName);
+      const article = await getArticleByFileName(fileName);
       if (article.url) {
         await vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(article.url + '/edit'));
       }
     }),
     vscode.commands.registerCommand('devto.publish', async (fileName: string) => {
       const article = await getArticleByFileName(fileName);
-			await vscode.window.withProgress({
+      await vscode.window.withProgress({
         title: `Publishing ${article.title}`,
         location: vscode.ProgressLocation.Notification,
       }, async () => {
@@ -79,7 +79,7 @@ export async function activate(context: vscode.ExtensionContext) {
       });
     }),
     vscode.commands.registerCommand('devto.delete', async (fileName: string) => {
-			const article = await getArticleByFileName(fileName);
+      const article = await getArticleByFileName(fileName);
       if (article.url) {
         await vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(article.url +'/delete_confirm'));
       }

@@ -7,6 +7,7 @@
 - Allow you to sign in DEV Community and list all your posts
 - Edit your posts and save online
 - View post online
+- Upload images to GitHub and quickly insert image URL into markdown file
 
 ## Sign in
 
@@ -37,6 +38,8 @@
 - Modify `publish` property in yaml meta section at the top of the post
 - Press `Ctrl` + `S` to save publish state
 
+You can also right click unpublished post in the list, and click `Publish` to quickly publish the post.
+
 ## Delete a post
 
 - Right click the post in post list
@@ -50,7 +53,13 @@
 
 ## Upload images
 
-You can find serval VS Code extensions to allow you to upload file online, such as [Azure Storage](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurestorage). Or if you prefer to host images on GitHub, you can open the specific repository folder with VS Code, and push any changes with VS Code built-in git extension.
+- Open or create a post
+- Click `Upload images` on bottom left cornor of VS Code
+- Paste your GitHub personal access token if you haven't set
+
+You can generate new GitHub personal access token from <https://github.com/settings/tokens>. Click `Generate new token`, and check `repo` scope.
+
+You can also find serval VS Code extensions to allow you to upload file online, such as [Azure Storage](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurestorage).
 
 ## License
 
