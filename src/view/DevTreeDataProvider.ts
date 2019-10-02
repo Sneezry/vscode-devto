@@ -27,14 +27,24 @@ export class DevTreeDataProvider implements vscode.TreeDataProvider<string> {
   async getTreeItem(fileName: string): Promise<vscode.TreeItem> {
     let command: vscode.Command;
     if (fileName === 'Sign in') {
-      command = {
-        title: 'Sign in',
-        command: 'devto.signin',
+      return {
+        label: fileName,
+        tooltip: fileName,
+        id: fileName,
+        command: {
+          title: 'Sign in',
+          command: 'devto.signin',
+        },
       };
     } else if (fileName === 'Create API key') {
-      command = {
-        title: 'Create API key',
-        command: 'devto.key',
+      return {
+        label: fileName,
+        tooltip: fileName,
+        id: fileName,
+        command: {
+          title: 'Create API key',
+          command: 'devto.key',
+        },
       };
     } else {
       command = {

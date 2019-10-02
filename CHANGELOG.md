@@ -4,6 +4,11 @@ All notable changes to the "vscode-devto" extension will be documented in this f
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## 0.0.9
+
+- Update icons
+- Bugfix
+
 ## 0.0.8
 
 - Add upload images to GitHub

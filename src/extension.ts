@@ -39,6 +39,7 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.workspace.registerFileSystemProvider('devto', devArticleVirtualFSProvider, { isCaseSensitive: true, isReadonly: false }),
     vscode.commands.registerCommand('devto.signin', async () => {
       await apiKeyManager.updateApiKeyCommand(() => {
+        devArticleVirtualFSProvider.clearCache();
         treeDataProvider.refresh();
       });
     }),
