@@ -3,7 +3,7 @@
   "displayName": "DEV Community",
   "description": "DEV Community",
   "publisher": "sneezry",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "icon": "resources/DEV.png",
   "preview": true,
   "galleryBanner": {
@@ -95,12 +95,12 @@
       {
         "command": "devto.updateGitHubPersionalToken",
         "title": "Update GitHub persional access token",
-        "category": "DEV Commuity"
+        "category": "DEV Community"
       },
       {
         "command": "devto.removeGitHubPersionalToken",
         "title": "Remove GitHub persional access token",
-        "category": "DEV Commuity"
+        "category": "DEV Community"
       }
     ],
     "viewsContainers": {
