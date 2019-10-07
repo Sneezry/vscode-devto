@@ -3,7 +3,7 @@
   "displayName": "DEV Community",
   "description": "DEV Community",
   "publisher": "sneezry",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "icon": "resources/DEV.png",
   "preview": true,
   "galleryBanner": {
@@ -22,6 +22,8 @@
     "dev community"
   ],
   "activationEvents": [
+    "onCommand:devto.updateGitHubPersonalToken",
+    "onCommand:devto.removeGitHubPersonalToken",
     "onView:devto",
     "onFileSystem:devto"
   ],
@@ -93,13 +95,13 @@
         "title": "Upload image"
       },
       {
-        "command": "devto.updateGitHubPersionalToken",
-        "title": "Update GitHub persional access token",
+        "command": "devto.updateGitHubPersonalToken",
+        "title": "Update GitHub personal access token",
         "category": "DEV Community"
       },
       {
-        "command": "devto.removeGitHubPersionalToken",
-        "title": "Remove GitHub persional access token",
+        "command": "devto.removeGitHubPersonalToken",
+        "title": "Remove GitHub personal access token",
         "category": "DEV Community"
       }
     ],

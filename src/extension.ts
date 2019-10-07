@@ -46,11 +46,13 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand('devto.uploadImage', async () => {
       await imageUploadManager.uploadImage();
     }),
-    vscode.commands.registerCommand('devto.updateGitHubPersionalToken', async () => {
+    vscode.commands.registerCommand('devto.updateGitHubPersonalToken', async () => {
       await imageUploadManager.updateGitHubPersonalToken();
+      vscode.window.showInformationMessage('Your GitHub personal access token has been updated.');
     }),
-    vscode.commands.registerCommand('devto.removeGitHubPersionalToken', async () => {
+    vscode.commands.registerCommand('devto.removeGitHubPersonalToken', async () => {
       await imageUploadManager.removeGitHubPersonalToken();
+      vscode.window.showInformationMessage('Your GitHub personal access token has been removed.');
     }),
     vscode.commands.registerCommand('devto.view', async (fileName: string) => {
       const uri = resourceUriBuilder({

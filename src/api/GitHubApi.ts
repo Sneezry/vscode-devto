@@ -93,7 +93,7 @@ export class GitHubAPI {
     }
     try {
       await this._getRepo(repoName);
-    } catch {
+    } catch(error) {
       await this._createRepo(repoName, repoDescription);
     }
     this._isRepoExist[repoName] = true
@@ -113,7 +113,7 @@ export class GitHubAPI {
   async upload(uri: vscode.Uri) {
     await this._ensureRepo(DEFAULT_REPO_NAME, DEFAULT_REPO_DESCRIPTION);
     const userInfo = await this._getUserInfo();
-    const imageFileName = path.basename(uri.fsPath);
+    const imageFileName = path.basename(uri.fsPath).replace(/\.([^\.]*?)$/, `.${Date.now().toString(36)}.$1`);
     const imageFileContent = await this._readFileAsBase64(uri);
     const options = this._buildRequestOptions(`/repos/${userInfo.login}/${DEFAULT_REPO_NAME}/contents/${imageFileName}`, 'PUT', undefined, {
       message: `Upload ${imageFileName}`,
