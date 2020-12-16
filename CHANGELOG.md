@@ -4,6 +4,10 @@ All notable changes to the "vscode-devto" extension will be documented in this f
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## 0.0.12
+
+- Add top-level "article" key to body of create/update calls
+
 ## 0.0.11
 
 - Add upload images to Imgur
