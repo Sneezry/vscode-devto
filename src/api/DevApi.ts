@@ -14,7 +14,7 @@ export interface Article {
 export class DevAPI {
   constructor(private _apiKey?: string) {}
 
-  private _buildRequestOptions(path: string, method: string, parameters?: {[key: string]: string|number}, artical?: Article) {
+  private _buildRequestOptions(path: string, method: string, parameters?: {[key: string]: string|number}, article?: Article) {
     let uri = `https://dev.to/api${path}`;
     if (parameters) {
       let query: string[] = [];
@@ -32,8 +32,8 @@ export class DevAPI {
       json: true,
     };
 
-    if (artical) {
-      options.body = artical;
+    if (article) {
+      options.body = { article };
     }
 
     return options;
