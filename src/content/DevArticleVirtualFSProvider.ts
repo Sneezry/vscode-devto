@@ -151,7 +151,8 @@ tags:
             vscode.workspace.fs.rename(uri, newUri);
           }, 0);
         } catch(error) {
-          vscode.window.showWarningMessage('Failed to save \'' + title + '-0' + id + '\'.md: ' + error.message);
+          console.error(error);
+          vscode.window.showWarningMessage('Failed to save \'' + title + '-0' + id + '\'.md. See console for details.');
         }
       });
     } else {

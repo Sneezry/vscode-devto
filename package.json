@@ -3,15 +3,19 @@
   "displayName": "DEV Community",
   "description": "DEV Community",
   "publisher": "sneezry",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "icon": "resources/DEV.png",
   "preview": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sneezry/vscode-devto.git"
+  },
   "galleryBanner": {
     "color": "#2D2D2D",
     "theme": "dark"
   },
   "engines": {
-    "vscode": "^1.38.0"
+    "vscode": "^1.63.0"
   },
   "categories": [
     "Other"
@@ -223,17 +227,15 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    "watch": "tsc -watch -p ./"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.42",
     "@types/node": "^10.12.21",
     "@types/request-promise": "^4.1.44",
+    "@types/vscode": "^1.63.1",
     "tslint": "^5.12.1",
-    "typescript": "^3.3.1",
-    "vscode": "^1.1.28"
+    "typescript": "^3.3.1"
   },
   "dependencies": {
     "request": "^2.88.0",

@@ -26,6 +26,7 @@ export class DevAPI {
     const options: rq.Options =  {
       uri,
       headers: {
+        'User-Agent': 'vscode-devto;https://marketplace.visualstudio.com/items?itemName=sneezry.vscode-devto',
         'api-key': this._apiKey,
       },
       method,

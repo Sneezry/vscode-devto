@@ -1,3 +1,4 @@
+import { TextDecoder } from 'util';
 import * as vscode from 'vscode';
 import {Article, DevAPI} from '../api/DevApi';
 import {resourceUriBuilder} from '../content/ResourceUriBuilder';
@@ -9,7 +10,7 @@ export class DevTreeDataProvider implements vscode.TreeDataProvider<string> {
   public readonly onDidChangeTreeData: vscode.Event<null> = this.onDidChangeTreeDataEvent.event;
 
   refresh() {
-    this.onDidChangeTreeDataEvent.fire();
+    this.onDidChangeTreeDataEvent.fire(null);
   }
 
   async getChildren() {
@@ -58,7 +59,8 @@ export class DevTreeDataProvider implements vscode.TreeDataProvider<string> {
       resourcePath: fileName,
       raw: true,
     });
-    const articleRaw = (await vscode.workspace.fs.readFile(uri)).toString();
+    const decoder = new TextDecoder()
+    const articleRaw = decoder.decode(await vscode.workspace.fs.readFile(uri));
     const article: Article = JSON.parse(articleRaw);
     const commentCount = article.comments_count || 0;
     const positiveReactionsCount = article.positive_reactions_count || 0;

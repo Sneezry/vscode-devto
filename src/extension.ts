@@ -6,13 +6,15 @@ import {resourceUriBuilder} from './content/ResourceUriBuilder';
 import {DevArticleVirtualFSProvider} from './content/DevArticleVirtualFSProvider';
 import {DevTreeDataProvider} from './view/DevTreeDataProvider';
 import {ImageUploadManager} from './ImageUploadManager';
+import { TextDecoder } from 'util';
 
 async function getArticleByFileName(fileName: string) {
   const uri = resourceUriBuilder({
     resourcePath: fileName,
     raw: true,
   });
-  const articleRaw = (await vscode.workspace.fs.readFile(uri)).toString();
+  const decoder = new TextDecoder()
+  const articleRaw = decoder.decode(await vscode.workspace.fs.readFile(uri));
   const article: Article = JSON.parse(articleRaw);
   return article;
 }
@@ -59,7 +61,8 @@ export async function activate(context: vscode.ExtensionContext) {
         resourcePath: fileName,
         raw: true,
       });
-      const articleRaw = (await vscode.workspace.fs.readFile(uri)).toString();
+      const decoder = new TextDecoder()
+      const articleRaw = decoder.decode(await vscode.workspace.fs.readFile(uri));
       const article: Article = JSON.parse(articleRaw);
       if (article.url) {
         await vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(article.url));
