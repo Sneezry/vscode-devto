@@ -61,6 +61,11 @@ export class DevTreeDataProvider implements vscode.TreeDataProvider<string> {
     });
     const decoder = new TextDecoder()
     const articleRaw = decoder.decode(await vscode.workspace.fs.readFile(uri));
+    if (!articleRaw) {
+      // draft document can break everything, let's return for now
+      // TODO: find if something else can be done
+      return;
+    }
     const article: Article = JSON.parse(articleRaw);
     const commentCount = article.comments_count || 0;
     const positiveReactionsCount = article.positive_reactions_count || 0;
