@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
-import {Article, DevAPI} from '../api/DevApi';
-import {titleParser, publishStateParser} from './MetaParser';
-import {resourceUriBuilder} from '../content/ResourceUriBuilder';
+import { Article, DevAPI } from '../api/DevApi';
+import { titleParser, publishStateParser } from './MetaParser';
+import { resourceUriBuilder } from '../content/ResourceUriBuilder';
 
 const emptyArray = new Uint8Array(0);
 
@@ -10,13 +10,13 @@ export class DevArticleVirtualFSProvider implements vscode.FileSystemProvider {
   private _articleList: Article[] = [];
   private _articleListCached = false;
 
-  constructor(private api: DevAPI) {}
+  constructor(private api: DevAPI) { }
 
   async initialize() {
     this._articleListCached = true;
     try {
       this._articleList = await this.api.list();
-    } catch(ignore) {}
+    } catch (ignore) { }
   }
 
   get onDidChangeFile(): vscode.Event<vscode.FileChangeEvent[]> {
@@ -42,7 +42,7 @@ export class DevArticleVirtualFSProvider implements vscode.FileSystemProvider {
         this._articleListCached = true;
         try {
           this._articleList = await this.api.list();
-        } catch(ignore) {}
+        } catch (ignore) { }
       }
 
       return this._articleList.map((article) => {
@@ -53,7 +53,7 @@ export class DevArticleVirtualFSProvider implements vscode.FileSystemProvider {
   }
 
   // no need to support dir
-  createDirectory(uri: vscode.Uri) {}
+  createDirectory(uri: vscode.Uri) { }
 
   async readFile(uri: vscode.Uri): Promise<Uint8Array> {
     if (!this.api.hasApiKey) {
@@ -78,13 +78,12 @@ tags:
       return item.id === id;
     });
 
-    if (!article || !article.body_markdown) {
+    const data = uri.query === 'raw' ? (article ? JSON.stringify(article) : undefined) : (article && article.body_markdown ? article.body_markdown : undefined);
+    if (!data) {
       return emptyArray;
     }
 
-    const buffer = uri.query === 'raw' ? 
-        Buffer.from(JSON.stringify(article), 'utf8') :
-        Buffer.from(article.body_markdown, 'utf8');
+    const buffer = Buffer.from(data, 'utf8');
     return new Uint8Array(buffer);
   }
 
@@ -102,7 +101,7 @@ tags:
 
   async writeFile(uri: vscode.Uri, content: Uint8Array, options: { create: boolean, overwrite: boolean }) {
     const markdown = content.toString();
-    const title = titleParser(markdown);
+    const title = titleParser(markdown, uri);
     const published = publishStateParser(markdown);
     const idMatched = uri.path.match(/0([\-]?[1-9]\d*)\.md$/);
     const id = idMatched ? Number(idMatched[1]) : 0;
@@ -134,11 +133,11 @@ tags:
           if (newArticle.published === undefined) {
             newArticle.published = published;
           }
-          
+
           const newPostIndex = this._articleList.findIndex((article) => {
             return article.id === id;
           });
-          
+
           const newUri = resourceUriBuilder({
             title: newArticle.title,
             id: newArticle.id,
@@ -150,7 +149,7 @@ tags:
           setTimeout(() => {
             vscode.workspace.fs.rename(uri, newUri);
           }, 0);
-        } catch(error) {
+        } catch (error) {
           console.error(error);
           vscode.window.showWarningMessage('Failed to save \'' + title + '-0' + id + '\'.md. See console for details.');
         }
@@ -193,7 +192,7 @@ tags:
       return article.id === id;
     });
 
-    if (id > 0 && (!article || article.title !== title &&  article.reserveTitle !== title)) {
+    if (id > 0 && (!article || article.title !== title && article.reserveTitle !== title)) {
       throw vscode.FileSystemError.FileNotFound();
     }
 

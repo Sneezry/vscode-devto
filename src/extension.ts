@@ -91,7 +91,7 @@ export async function activate(context: vscode.ExtensionContext) {
       }
     }),
     vscode.commands.registerCommand('devto.key', async () => {
-      await vscode.commands.executeCommand('vscode.open', vscode.Uri.parse('https://dev.to/settings/account'));
+      await vscode.commands.executeCommand('vscode.open', vscode.Uri.parse('https://dev.to/settings/extensions#api'));
     }),
     vscode.commands.registerCommand('devto.refresh', () => {
       if (!api.hasApiKey) {
